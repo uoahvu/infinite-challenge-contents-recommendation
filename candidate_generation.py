@@ -17,14 +17,16 @@ class ContentEmbedding(nn.Module):
 
     def forward(self, x):
         # 시즌
-        embedded_season = self.season_embedding(torch.tensor(x.iloc[:, -2]).long())
+        embedded_season = self.season_embedding(torch.tensor(x.loc[:, "season"]).long())
         # 특집
-        special_epicode = nn.functional.one_hot(torch.tensor(x.iloc[:, -1]))
+        special_epicode = nn.functional.one_hot(torch.tensor(x.loc[:, "special"]))
         # 제목텍스트
-        embedded_title = torch.tensor(self.description_embedding.encode(x.iloc[:, 2]))
+        embedded_title = torch.tensor(
+            self.description_embedding.encode(x.loc[:, "title_"])
+        )
         # 설명텍스트
         embedded_description = torch.tensor(
-            self.description_embedding.encode(x.iloc[:, 6])
+            self.description_embedding.encode(x.loc[:, "description"])
         )
         result = torch.concat(
             [embedded_season, special_epicode, embedded_title, embedded_description],

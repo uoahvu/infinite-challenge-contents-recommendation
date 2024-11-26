@@ -1,5 +1,6 @@
 from data_loader import data_preprocess
 from candidate_generation import ContentEmbedding, candidate_generator
+from pairwise_ranking import PairwiseRanking, pair_preference_survey
 
 if __name__ == "__main__":
     data = data_preprocess()
@@ -21,8 +22,12 @@ if __name__ == "__main__":
     # print(data.loc[similar_contents_idx.flatten()])
 
     print("PAIR-WISE PREFERENCE SURVEY ...")
-    # TODO
+    preference = pair_preference_survey(data, index)
+    print(preference)
+
     print("FINE TUNING ...")
-    # TODO
+    num_epochs = 10
+    ranking_model = PairwiseRanking(num_epochs, index)
+    ranking_model.train_model(preference)
     print("RECOMMENDATION ...")
     # TODO

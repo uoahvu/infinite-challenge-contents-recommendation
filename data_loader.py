@@ -50,7 +50,7 @@ def data_preprocess():
     df["season"] = df["date"].apply(lambda x: date2season(x))
 
     # Title
-    df["title"] = df["title"].str.replace(r"[무한도전]", "")
+    df["title_"] = df["title"].str.replace(r"[무한도전]", "")
 
     # 특집회 여부
     df["special"] = df["vod_num"].apply(lambda x: 1 if x == "특집회" else 0)
