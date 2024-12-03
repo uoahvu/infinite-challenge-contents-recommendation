@@ -2,6 +2,8 @@ from data_loader import data_preprocess
 from candidate_generation import ContentEmbedding, candidate_generator
 from pairwise_ranking import PairwiseRanking, pair_preference_survey
 
+import torch
+
 if __name__ == "__main__":
     data = data_preprocess()
 
@@ -10,7 +12,7 @@ if __name__ == "__main__":
     num_season = data["season"].nunique()
     embedding_model = ContentEmbedding(hidden_size, num_season)
     index, content_embedding = embedding_model.inference(data)
-    print("content_embedding", content_embedding)
+    print("content_embedding", content_embedding, content_embedding.shape)
 
     print("SEARCH SIMILAR CONTENTS ...")
     k = 5
@@ -27,7 +29,11 @@ if __name__ == "__main__":
 
     print("FINE TUNING ...")
     num_epochs = 10
-    ranking_model = PairwiseRanking(num_epochs, index)
-    ranking_model.train_model(preference)
+    num_contents = content_embedding.size(0)
+    embedding_dim = content_embedding.size(1)
+    ranking_model = PairwiseRanking(num_epochs, num_contents, embedding_dim, index)
+    optimizer = torch.optim.Adam(ranking_model.parameters(), lr=0.001)
+    ranking_model.train_model(preference, optimizer)
+
     print("RECOMMENDATION ...")
     # TODO
