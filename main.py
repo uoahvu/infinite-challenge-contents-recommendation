@@ -1,6 +1,7 @@
 from data_loader import data_preprocess
 from candidate_generation import ContentEmbedding, candidate_generator
 from pairwise_ranking import PairwiseRanking, pair_preference_survey
+from recommendation import recommendation
 
 import torch
 
@@ -12,7 +13,6 @@ if __name__ == "__main__":
     num_season = data["season"].nunique()
     embedding_model = ContentEmbedding(hidden_size, num_season)
     index, content_embedding = embedding_model.inference(data)
-    print("content_embedding", content_embedding, content_embedding.shape)
 
     print("SEARCH SIMILAR CONTENTS ...")
     k = 20
@@ -20,9 +20,9 @@ if __name__ == "__main__":
     query_emb = index.reconstruct(query_idx)
     distance, similar_contents_idx = candidate_generator(index, query_emb, k)
 
-    print(data.loc[query_idx])
-    print(data.loc[similar_contents_idx.flatten()])
-    print(distance)
+    # print(data.loc[query_idx])
+    # print(data.loc[similar_contents_idx.flatten()])
+    # print(distance)
 
     print("PAIR-WISE PREFERENCE SURVEY ...")
     preference = pair_preference_survey(data, index)
@@ -40,5 +40,8 @@ if __name__ == "__main__":
     query_emb2 = updated_index.reconstruct(query_idx)
     distance, similar_contents_idx = candidate_generator(updated_index, query_emb2, k)
     # print(data.loc[query_idx])
-    print(data.loc[similar_contents_idx.flatten()])
-    print(distance)
+    # print(data.loc[similar_contents_idx.flatten()])
+    # print(distance)
+
+    content_idx = -1  # newbie
+    recommendation(data, updated_index, content_idx)

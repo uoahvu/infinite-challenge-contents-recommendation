@@ -32,7 +32,6 @@ class ContentEmbedding(nn.Module):
             [embedded_season, special_epicode, embedded_title, embedded_description],
             dim=-1,
         )
-        print(result.shape)
         return result
 
     def inference(self, x):

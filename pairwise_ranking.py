@@ -30,10 +30,10 @@ def pair_preference_survey(data, index):
 
     result = []
     print("🎯 더 재밌게 본 영상을 알려주세요 !")
-    print("둘  다  별로  ! => 0")
-    print("1이 더 좋아요 ! => 1")
-    print("2이 더 좋아요 ! => 2")
-    print("둘  다 좋아요 ! => 3")
+    print("｢    둘  다  별로  ! => 0")
+    print("     1이 더 좋아요 ! => 1     ")
+    print("     2이 더 좋아요 ! => 2     ")
+    print("     둘  다 좋아요 ! => 3    ｣")
     for pair in sample_pairs:
         content1 = random.choice(clusters[pair[0]])
         content2 = random.choice(clusters[pair[1]])
