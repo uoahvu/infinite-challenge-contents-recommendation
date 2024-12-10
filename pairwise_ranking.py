@@ -45,7 +45,7 @@ def pair_preference_survey(data, index):
 
         user_input = int(input())
 
-        result.append([pair[0], pair[1], user_input])
+        result.append([content1, content2, user_input])
 
     return result
 
@@ -109,8 +109,9 @@ class PairwiseRanking(nn.Module):
         triplet_set = []
         for pref in preference_data:
             if pref[2] == 1 or pref[2] == 2:
+                print([pref[pref[2] - 1], pref[pref[2] - 1], pref[[1, 0][pref[2] - 1]]])
                 triplet_set.append(
-                    [pref[pref[2] - 1], pref[pref[2] - 1], pref[pref[2]]]
+                    [pref[pref[2] - 1], pref[pref[2] - 1], pref[[1, 0][pref[2] - 1]]]
                 )
                 continue
 
