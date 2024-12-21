@@ -3,7 +3,7 @@ Recommender system for Korean variety show "Infinite Challenge" : Content-based 
 
 ### How to train/test
 
-```python
+```
 python main.py
 ```
 
